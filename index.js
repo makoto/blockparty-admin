@@ -22,6 +22,7 @@ require('http').createServer((req, res) => {
             web3.eth.getBlock(event.blockNumber).then(function(r){
               let registeredAt = moment(r.timestamp * 1000).format();
               res.write([registeredAt, event.returnValues.participantName, decrypted.toString('utf8')].join('\t'));
+              res.write('\n');
             })
         })
     })
