@@ -1,4 +1,4 @@
-require('now-env');
+// require('now-env');
 const fs = require('fs');
 const Web3 = require('web3');
 const web3 = new Web3("wss://mainnet.infura.io/ws");

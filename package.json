@@ -5,16 +5,17 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "micro"
+    // "start": "micro"
+    "start": "index.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "crypto": "^1.0.1",
     "express": "^4.16.2",
-    "micro": "latest",
+    // "micro": "latest",
     "moment": "^2.20.1",
-    "now-env": "^3.0.3",
+    // "now-env": "^3.0.3",
     "web3": "^1.0.0-beta.30"
   }
 }
