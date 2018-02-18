@@ -1,6 +1,6 @@
 require('now-env');
 const fs = require('fs');
-const Web3 = require('Web3');
+const Web3 = require('web3');
 const web3 = new Web3("wss://mainnet.infura.io/ws");
 const secret_file =  'tmp/test_private.key';
 const privateKey = process.env.SECRET || fs.readFileSync(secret_file, 'utf8');
