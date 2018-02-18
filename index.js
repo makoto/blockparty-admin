@@ -14,21 +14,24 @@ require('http').createServer((req, res) => {
     res.writeHead(200, { 'Content-Type': 'text/plain' });
     var conference = new web3.eth.Contract(abi, address)
     conference.methods.name().call(function(e,r){
-        conference.events.RegisterEvent({fromBlock:5080322}, function(error, event){
+        res.write(r);
+        res.write('\n');
+
+        conference.getPastEvents('RegisterEvent', {fromBlock:5080322}, function(error, events){
             console.log(r)
-            console.log(event)
-            res.write(r);
-            res.write('\n');
-            decrypted = crypto.privateDecrypt(privateKey, new Buffer(event.returnValues._encryption, 'hex'));            
-            web3.eth.getBlock(event.blockNumber).then(function(r){
-              let registeredAt = moment(r.timestamp * 1000).format();
-              res.write([registeredAt, event.returnValues.participantName, decrypted.toString('utf8')].join('\t'));
-              res.write('\n');
+            console.log(events.length)
+            events.forEach(function(event, index){
+                let decrypted = crypto.privateDecrypt(privateKey, new Buffer(event.returnValues._encryption, 'hex')).toString('utf8');
+                web3.eth.getBlock(event.blockNumber).then(function(r){
+                    let registeredAt = moment(r.timestamp * 1000).format();
+                    res.write([index + 1, registeredAt, event.returnValues.participantName, decrypted].join('\t'));
+                    res.write('\n');
+                    if(index + 1 == events.length){
+                        res.end()
+                    }
+                })
             })
         })
     })
-    setTimeout(function(){
-      res.end('\nend\n')
-    }, 20000)
 }).listen(process.env.PORT || 3000);
 
