@@ -16,9 +16,10 @@ require('http').createServer((req, res) => {
     conference.methods.name().call(function(e,r){
         conference.events.RegisterEvent({fromBlock:5080322}, function(error, event){
             console.log(r)
+            console.log(event)
             res.write(r);
             res.write('\n');
-            decrypted = crypto.privateDecrypt(privateKey, new Buffer(event.returnValues._encryption, 'hex'));
+            decrypted = crypto.privateDecrypt(privateKey, new Buffer(event.returnValues._encryption, 'hex'));            
             web3.eth.getBlock(event.blockNumber).then(function(r){
               let registeredAt = moment(r.timestamp * 1000).format();
               res.write([registeredAt, event.returnValues.participantName, decrypted.toString('utf8')].join('\t'));
