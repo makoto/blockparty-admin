@@ -1,0 +1,5 @@
+{
+  "env": {
+    "SECRET": "@my-secret-key"
+  }
+}
