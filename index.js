@@ -13,9 +13,11 @@ const address = data.networks['1'].address;
 require('http').createServer((req, res) => {
     res.writeHead(200, { 'Content-Type': 'text/plain' });
     var conference = new web3.eth.Contract(abi, address)
-    conference.methods.name().call(function(e,r){
-        res.write(r);
-        res.write('\n');
+    conference.methods.name().call(function(e,name){
+        if(name){
+            res.write(name.toString());
+            res.write('\n');
+        }
 
         conference.getPastEvents('RegisterEvent', {fromBlock:5080322}, function(error, events){
             console.log(r)
